@@ -52,6 +52,12 @@
       <artifactId>standard</artifactId>
       <version>1.1.2</version>
     </dependency>
+    <dependency>
+      <groupId>com.github.penggle</groupId>
+      <artifactId>kaptcha</artifactId>
+      <version>2.3.2</version>
+    </dependency>
+
 
   </dependencies>
 

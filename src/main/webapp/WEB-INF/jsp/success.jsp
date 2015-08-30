@@ -12,5 +12,6 @@
 </head>
 <body>
 <h2 style="color:red">Hello:${name}</h2>
+<a href="/signout"><h3>sign out</h3></a>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html oncontextmenu=self.event.returnValue=false>
 <head>
 	<title>Login</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=gbk" />
@@ -25,36 +25,90 @@
 				}
 				//connect with server
 				var da = "name="+name+"&password="+password;
-				$.post("LoginCheck",da,function(data,status){
+				$.post("login",da,function(data,status){
 					/*server wrong*/
 					if(status != "success"){
 						$("#remind").text("Server is busy");
 						return;
 					}
-					//login fail
+					//login success
 					if(data == "success"){
 						location.reload();
 						return;
 					}
-					//login success
+					//login fail
 
 					$("#remind").text(data);
 					return;});
 
 			});
 			$("#register").click(function(){
-				top.location = "register.html";
+				location.href = "register";
 			});
 			$(document).keydown(function(event){
 				if(event.keyCode==13){
 					$("#submit").click();
 				}
 			});
+			init();
 		});
+		function init(){
+			images = [];
+			t =0;
+			perNo = 0;
+			nowNo = 0;
+			for(i=1;i<14;i++){
+				images[i] = new Image();
+				images[i].src = "./res/freshfruit"+i+".jpg";
+			}
+			bki();
+		}
+		//change the backgroundImage random
+		function bki(){
+			var len = images.length;
+			do {
+				var no = Math.floor(len * Math.random());
+			}while(no == 0);
+			preNo = nowNo;
+			nowNo = no;
+
+			document.body.style.backgroundImage = 'url("'+images[no].src+'")';
+			t=setTimeout("bki()",3000);
+		}
+
+		//body onclick()
+		function bodyclick(event){
+			var btnNum = event.button;
+			changebk(btnNum);
+		}
+
+		//set backgoundImage by no;
+		function bki_i(i){
+			if(i<0||i>(images.length-1)){
+				t = bki();
+			}else{
+				document.body.style.backgroundImage = 'url("'+images[i].src+'")';
+			}
+		}
+
+		//change the background
+		function changebk(w){
+			//1---next
+			clearTimeout(t);
+			if(0 == w){
+				bki();
+			}else if(2 == w){
+				bki_i(preNo);
+			}
+		}
 
 	</script>
 
 	<style type="text/css">
+		input{
+			background:rgba(255,255,255,0.2);
+		}
+
 		#login{
 			width:300px;
 			height:210px;
@@ -68,9 +122,7 @@
 		#login_div{
 			text-align:center;
 		}
-		body{
-			background-image:url("./res/freshfruit3.jpg");
-		}
+
 		#remind{
 			color:red;
 			font-size:1em;
@@ -79,7 +131,7 @@
 
 </head>
 <body>
-<form name="formid" method="post" id=login action="LoginCheck">
+<form name="formid" method="post" id="login" action="logincheck">
 	<fieldset >
 		<legend><h2>Login</h2></legend>
 		<div id=login_div>
@@ -87,7 +139,7 @@
 			Password<input id="password" name="password" type="password" size="30" /><br />
 			<p  id="remind">&nbsp&nbsp</p>
 			<input type="button"  id="submit" value="submit" />
-			<input type="button"   value="register"/>
+			<input type="button" id="register"  value="register"/>
 		</div>
 	</fieldset>
 </form>

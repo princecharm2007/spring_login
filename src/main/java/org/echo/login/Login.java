@@ -4,6 +4,7 @@ import org.echo.login.bean.LoginUser;
 import org.echo.login.bean.User;
 import org.echo.login.dao.UserDao;
 import org.echo.login.dao.UserJDBCTemplate;
+import org.echo.login.utils.SpringContextUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,27 +21,19 @@ import java.util.List;
  */
 @Controller
 public class Login {
-
-    @RequestMapping(value="/Login")
-    public String login_get(ModelMap map,HttpSession session){
+    @RequestMapping(value="/login",method = RequestMethod.GET)
+    public String login(HttpSession session){
         if(session.getAttribute("name") != null){
-            return "redirect:Success";
+            return "redirect:success";
         }
         session.setAttribute("check","ok");
         return "login";
     }
-    @RequestMapping(value="/LoginCheck",method = RequestMethod.GET)
-    public String login_check_get(HttpSession session,ModelMap map){
-        if(session.getAttribute("name") != null){
 
-            return "redirect:Success";
-        }
-        return "redirect:Login";
-    }
-    @RequestMapping(value="/LoginCheck",method = RequestMethod.POST)
+    @RequestMapping(value="/login",method = RequestMethod.POST)
     public String login_check(@ModelAttribute LoginUser loginUser,ModelMap map,HttpSession session){
         if(session.getAttribute("check") == null){
-            return "redirect:Login";
+            return "redirect:login";
         }
         if(session.getAttribute("name") != null){
             map.put("Message","success");
@@ -51,7 +43,7 @@ public class Login {
             map.put("Message","UnknownError");
             return "status";
         }
-        User user = (User)SpringContextUtil.getBean("user");
+        User user = (User) SpringContextUtil.getBean("user");
         user.setName(loginUser.getName());
         user.setPassword(loginUser.getPassword());
         UserDao userDao = (UserJDBCTemplate)SpringContextUtil.getBean("userJDBCTemplate");
@@ -74,15 +66,15 @@ public class Login {
         return "status";
     }
 
-    @RequestMapping(value="/Success")
+    @RequestMapping(value="/success")
     public String success(ModelMap map,HttpSession session){
        String name = (String)session.getAttribute("name");
         if(name == null){
-            return "redirect:Login";
+            return "redirect:login";
         }
         return "success";
     }
-    @RequestMapping(value="/AllUser")
+    @RequestMapping(value="/allusers")
     public String get_all(ModelMap map){
         UserJDBCTemplate jdbcTemplate =
                 (UserJDBCTemplate)SpringContextUtil.getBean("userJDBCTemplate");
@@ -90,7 +82,10 @@ public class Login {
         int num = users.size();
         map.addAttribute("users",users);
         map.addAttribute("size",new Integer(num));
-        return "alluser";
+        return "allusers";
     }
+
+
+
 
 }

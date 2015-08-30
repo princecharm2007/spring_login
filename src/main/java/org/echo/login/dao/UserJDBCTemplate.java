@@ -48,14 +48,8 @@ public class UserJDBCTemplate implements UserDao {
     @Override
 
     public boolean create(User u){
-
-        if(judge(u) != NOUSER){
-            return false;
-        }
-        else{
-            String sql = "insert into user(name,password,sex,address) value(?,?,?,?)";
-            jdbcTemplateObject.update(sql,u.getName(),u.getPassword(),u.getSex(),u.getAddress());
-        }
+        String sql = "insert into user(name,password,sex,address) value(?,?,?,?)";
+        jdbcTemplateObject.update(sql,u.getName(),u.getPassword(),u.getSex(),u.getAddress());
         return true;
     }
 
