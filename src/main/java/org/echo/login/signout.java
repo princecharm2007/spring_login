@@ -5,9 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 
-/**
- * Created by Echo on 2015/8/27.
- */
+
 @Controller
 public class signout {
     @RequestMapping(value="/signout")
@@ -18,3 +16,5 @@ public class signout {
         return "login";
     }
 }
+
+/*changer something*/
