@@ -26,15 +26,13 @@ public class Login {
         if(session.getAttribute("name") != null){
             return "redirect:success";
         }
-        session.setAttribute("check","ok");
         return "login";
     }
 
+
+    /*Ajax interface*/
     @RequestMapping(value="/login",method = RequestMethod.POST)
     public String login_check(@ModelAttribute LoginUser loginUser,ModelMap map,HttpSession session){
-        if(session.getAttribute("check") == null){
-            return "redirect:login";
-        }
         if(session.getAttribute("name") != null){
             map.put("Message","success");
             return "status";
@@ -84,8 +82,4 @@ public class Login {
         map.addAttribute("size",new Integer(num));
         return "allusers";
     }
-
-
-
-
 }

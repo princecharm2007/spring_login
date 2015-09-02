@@ -5,9 +5,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 
+<<<<<<< HEAD
 /**
  * Created by Echo on 2015/9/2
  */
+=======
+
+>>>>>>> 68fdbbc162772e8a5512322153b67f5bc58621a6
 @Controller
 public class signout {
     @RequestMapping(value="/signout")
@@ -18,3 +22,5 @@ public class signout {
         return "login";
     }
 }
+
+/*changer something*/
