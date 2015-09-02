@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by Echo on 2015/8/27.
+ * Created by Echo on 2015/9/2
  */
 @Controller
 public class signout {
